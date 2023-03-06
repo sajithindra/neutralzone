@@ -63,7 +63,7 @@ async def update_user(user: Cuser):
                 user.key : user.value
             }
         }
-        client.nz.user.update_one(filter=filter, update=update)
+        client.nz.user.find_one_and_update(filter=filter, update=update)
         return {'status': 200, 'message':'user updated successfully'}
     except Exception as e:
         return {'status': 400 , 'message': str(e)}
@@ -109,7 +109,7 @@ async def generate_key(email:str):
                 'datetime' : datetime.datetime.now()
             }
         }
-        client.nz.user.update_one(filter=filter, update=update)
+        client.nz.user.find_one_and_update(filter, update)(filter=filter, update=update)
         return {'status': 200, 'message':'apikey generated successfully', 'apikey' : apikey}
     except Exception  as e:
         return {'status': 400 , 'message': str(e)}
@@ -125,6 +125,14 @@ async def check_apikey(email:str):
         'expiry_date':1
     }
     user = dict(client.nz.user.find_one(filter=filter,projection=project))
+    if (datetime.datetime.now()-user['expiry_date']==31):
+        update={
+            '$set': {
+                'status' : 'denied'
+            }
+        }
+        client.nz.user.find_one_and_update(filter=filter, update=update)
+        return {'status': 200, 'message':'apikey expired', 'apikey' : user['apikey']}
     
 
 #api for payment details
@@ -165,7 +173,7 @@ async def payment(payment: Payment):
                 'expiry_date' : datetime.datetime.now()+datetime.timedelta(days=31)
             }
         }
-        client.nz.payment.update_one(filter=filter,update=update)
+        client.nz.payment.find_one_and_update(filter=filter,update=update)
         return {'status': 200, 'message':'payment added successfully'}
     except Exception as e:
         return {'status': 400 , 'message': str(e)}
