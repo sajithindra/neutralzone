@@ -125,21 +125,22 @@ async def check_apikey(email:str):
         'expiry_date':1
     }
     user = dict(client.nz.user.find_one(filter=filter,projection=project))
-    if (datetime.datetime.now()-user['expiry_date']==31):
+    if (datetime.datetime.now()-user['expiry_date']>=datetime.timedelta(days=31)):
         update={
             '$set': {
                 'status' : 'denied'
             }
         }
         client.nz.user.find_one_and_update(filter=filter, update=update)
-        return {'status': 200, 'message':'apikey expired', 'apikey' : user['apikey']}
+        return {'status': 500, 'message':'apikey expired', 'apikey' : user['apikey']}
+    else:
+        return {'status': 200, 'message': 'apikey is valid'}
     
 
 #api for payment details
 
 class Payment(BaseModel):
     email :str
-    apikey :str
     amount :float
     mode : str
     status : str 
@@ -154,7 +155,10 @@ async def get_payment(email:str):
         project ={
             "_id":0
         }
-        return list(client.nz.payment.find(filter=filter,projection=project))
+        if client.nz.payment.count_documents(filter) == 0:
+            return False
+        else:
+            return list(client.nz.payment.find(filter=filter,projection=project))
     except Exception as e:
         return { 'status' : 400 , 'message' : str(e)}
 
