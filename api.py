@@ -1,4 +1,6 @@
-from fastapi import  FastAPI
+from fastapi import FastAPI 
+import os
+import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 import datetime
 from fastapi import FastAPI,File , UploadFile,Form
@@ -19,28 +21,33 @@ app.add_middleware(
 async def get():
     return {'status': 200 , 'message': 'Success'}
 
-@app.post("/upload")
-def upload(file: UploadFile = File(...)):
-    try:
-        contents = file.file.read()
-        with open(file.filename, 'wb') as f:
-            f.write(contents)
-    except Exception:
-        return {"message": "There was an error uploading the file"}
-    finally:
-        file.file.close()
 
-    return {"message": f"Successfully uploaded {file.filename}"}
 
-@app.post('/uploadugpdf')
-async def uploadug(apikey :str = Form(),filename: str = Form(), file : UploadFile = File(...)):
+@app.post('/upload')
+async def upload_file(email : str = Form() ,apikey :str = Form(),filename: str = Form(), file : UploadFile = File(...)):
     path = os.path.join(email,filename+".pdf")
-    try:
-        contents = file.file.read()
-        with open(path, 'wb') as f:
-            f.write(contents)
-    except Exception as e:
-        return {'status':400 , 'message': str(e)}
-    finally:
-        file.file.close()
-        return True
+    filter ={
+        'apikey':apikey,
+        'email':email
+    }
+    if client.nz.user.count_documents(filter=filter) == 0:
+        return {'status':800, 'message': 'apikey not found'}
+    else:
+        try:
+            filter={
+                'apikey' : apikey
+            }
+            project = {
+                '_id':0,
+                'email':1
+            }
+            email= dict(client.nz.user.find_one(filter=filter,projection=project))['email']
+            contents = file.file.read()
+            with open(path, 'wb') as f:
+                f.write(contents)
+        except Exception as e:
+            return {'status':400 , 'message': str(e)}
+        finally:
+            file.file.close()
+            return {'status':200 , 'message': 'Success','path':path}
+    

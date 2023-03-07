@@ -43,6 +43,8 @@ async def get_user(email: str):
 async def create_user(user: User):
     try :
         client.nz.user.insert_one(dict(user))
+        if not os.path.exists(user.email):
+            os.makedirs(user.email)
         return {'status': 200, 'message':'user added successfully'}
     except Exception  as e:
         return {'status': 400 , 'message': str(e)}
