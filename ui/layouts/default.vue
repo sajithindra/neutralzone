@@ -3,10 +3,11 @@
     <v-app-bar app color="purple darken-4">
         <NuxtLink to="/" class="text-white p-4 text-2xl font-bold"> Neutral Zone</NuxtLink>
         <v-spacer></v-spacer>
-        <NuxtLink to="/services" class="p-2 text-l font-bold hover:bg-fuchsia-500 rounded h-10">Services</NuxtLink>
-        <NuxtLink to="/about" class="p-2 text-l font-bold hover:bg-fuchsia-500 rounded h-10">About</NuxtLink>
-        <NuxtLink to="/contact" class="p-2 text-l font-bold hover:bg-fuchsia-500 rounded h-10">Contact</NuxtLink>
-        <NuxtLink to="/register" class="p-2 text-l font-bold hover:bg-fuchsia-500 rounded h-10">Register</NuxtLink>
+        <NuxtLink to="/services" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">Services</NuxtLink>
+        <NuxtLink to="/about" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">About</NuxtLink>
+        <NuxtLink to="/contact" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">Contact</NuxtLink>
+        <NuxtLink to="/register" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">Register</NuxtLink>
+
     </v-app-bar>
     <v-main>
         <slot/>

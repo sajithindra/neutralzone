@@ -12,6 +12,7 @@
     "nuxt": "^3.2.3"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
     "daisyui": "^2.51.3",
     "sass": "^1.58.3",
     "vuetify": "^3.1.4"
