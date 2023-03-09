@@ -96,7 +96,11 @@ async def file_share(fileshare : FileShare):
             'apikey' : fileshare.destination_apikey
         }
         if (client.nz.user.count_documents(filter)) == 1 :
-            return {'status': 200 , 'message': 'filesharing initiated'}
+            try:
+                client.nz.fileshare.insert_one(dict(fileshare))
+                return {'status': 200 , 'message': 'filesharing initiated'}
+            except Exception as e:
+                return {'status': 400 , 'message': 'filesharing failed'}
         else:
             return {'status':400 , 'message': "destination account is invalid"}
     else :
@@ -123,7 +127,11 @@ async def folder_share(foldershare:FolderShare):
             'apikey' : foldershare.destination_apikey
             }
         if (client.nz.user.count_documents(filter)) == 1 :
-            return {'status': 200 , 'message': 'foldersharing initiated'}
+            try:
+                client.nz.foldershare.insert_one(dict(foldershare))
+                return {'status': 200 , 'message': 'foldersharing request initiated'}
+            except Exception as e:
+                return {'status':400 , 'message': 'foldersharing request failed'}
         else:
             return {'status':400 , 'message': "destination account is invalid"}
     else :
