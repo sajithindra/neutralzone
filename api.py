@@ -50,4 +50,12 @@ async def upload_file(email : str = Form() ,apikey :str = Form(),filename: str =
         finally:
             file.file.close()
             return {'status':200 , 'message': 'Success','path':path}
+
+class Download(BaseModel):
+    email :str
+    apikey :str
+    filename :str
+
+@app.get('/download')
+async def download(download : Download):
     

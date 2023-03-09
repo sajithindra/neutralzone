@@ -1,6 +1,7 @@
 from fastapi import  FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import datetime
+import os
 from pymongo import MongoClient
 from pydantic import BaseModel
 import random, string
@@ -179,8 +180,8 @@ async def payment(payment: Payment):
                 'expiry_date' : datetime.datetime.now()+datetime.timedelta(days=31)
             }
         }
-        client.nz.payment.find_one_and_update(filter=filter,update=update)
+        client.nz.user.find_one_and_update(filter=filter,update=update)
         return {'status': 200, 'message':'payment added successfully'}
     except Exception as e:
         return {'status': 400 , 'message': str(e)}
-    
+
