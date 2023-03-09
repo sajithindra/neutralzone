@@ -185,4 +185,3 @@ async def payment(payment: Payment):
     except Exception as e:
         return {'status': 400 , 'message': str(e)}
 
-@app.
