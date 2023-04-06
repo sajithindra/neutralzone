@@ -29,8 +29,11 @@ async function signin() {
         email: email.value,
         password: password.value
     }
-    const {data,error}=await useAsyncData 
-    console.log(data.value);
+    const {data,pending,error, refresh}=await useAsyncData ( 'userregistration',() =>  $fetch(url,{
+        method:'POST',body: udata
+    }))
+    console.log(data.value)
+
 }
 
 </script>
