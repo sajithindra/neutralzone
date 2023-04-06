@@ -26,8 +26,8 @@ async def get():
 
 #api to upload file
 @app.post('/upload')
-async def upload_file(email : str = Form() ,apikey :str = Form(), file : UploadFile = File(...)):
-    path = join(email,file.filename)
+async def upload_file(email : str = Form() ,apikey :str = Form(), project_name: str = Form(),file : UploadFile = File(...)):
+    path = join(email,project_name,file.filename)
     filter ={
         'apikey':apikey,
         'email':email
