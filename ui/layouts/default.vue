@@ -1,24 +1,18 @@
 <template>
 <v-app index>
-    <v-app-bar app color="purple darken-4">
-        <NuxtLink to="/" class="text-white p-4 text-2xl font-bold"> Neutral Zone</NuxtLink>
+    <v-app-bar app color="transparent" elevation="0">
+        <NuxtLink to="/" class="text-white px-20 m-4 text-2xl font-bold " > Neutral Zone</NuxtLink>
         <v-spacer></v-spacer>
-        <NuxtLink to="/services" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">Services</NuxtLink>
-        <NuxtLink to="/about" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">About</NuxtLink>
-        <NuxtLink to="/contact" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">Contact</NuxtLink>
-        <NuxtLink to="/register" class="p-3 text-l font-bold hover:bg-fuchsia-500 rounded ">Register</NuxtLink>
+        <NuxtLink to="/services" class="p-4 m-4 text-l text-white font-bold hover:bg-fuchsia-500 rounded ">Services</NuxtLink>
+        <NuxtLink to="/about" class="p-4 m-4 text-l text-white font-bold hover:bg-fuchsia-500 rounded ">About</NuxtLink>
+        <NuxtLink to="/contact" class="p-4 m-4 text-l text-white font-bold hover:bg-fuchsia-500 rounded ">Contact</NuxtLink>
+        <NuxtLink to="/register" class="py-10 m-4 text-l text-white font-bold hover:bg-fuchsia-500 rounded ">Register</NuxtLink>
 
     </v-app-bar>
-    <v-main>
+    <v-main class="bg-fuchsia-800">
         <slot/>
     </v-main>
-    <v-footer padless>
-    <v-col
-      class="text-center bg-fuchsia-800 text-white px-10 py-2 text-l"
-      cols="12">
-      {{ new Date().getFullYear() }} : <strong>Copyright (c) Securekloud Technologies, Ltd. All rights reserved.</strong>
-    </v-col>
-  </v-footer>
+ 
 </v-app>
 </template>
 
