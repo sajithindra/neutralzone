@@ -13,14 +13,15 @@
 </template>
 
 <script setup>
+const router = useRouter()
 const name = ref("")
 const email = ref("")
 const password= ref("")
 let rules = {
-    required : (v) => !!v || "required",
-    name : (v) => (v.match(/^[a-zA-Z\. ]+$/)) || "Please check name",
-    email : (v) => (v.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) || "Please use proper format for email",
-    password:(v) => (v.length>=8) || "Minimun 8 charectors required"
+    required : v => !!v || "required",
+    name : v => (v.match(/^[a-zA-Z\. ]+$/)) || "Please check name",
+    email : v => (v.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) || "Please use proper format for email",
+    password:v => (v.length>=8) || "Minimun 8 charectors required"
 }
 async function signin() {
     let url = "http://127.0.0.1:8000/user"
@@ -32,7 +33,9 @@ async function signin() {
     const {data,pending,error, refresh}=await useAsyncData ( 'userregistration',() =>  $fetch(url,{
         method:'POST',body: udata
     }))
-    console.log(data.value)
+    if (data.value.status == 200){
+        router.push({path:'/'})
+    }
 
 }
 
